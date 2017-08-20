@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "2014301500035:123456", "bar@example.com:world"
+            "2014301500035:123456:1", "2014301500036:123456:2", "2014301500037:123456:3", "2014301500038:123456:4"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private String personType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -353,6 +354,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
+                    personType = pieces[2];
                     return pieces[1].equals(mPassword);
                 }
             }
@@ -369,7 +371,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 System.out.print("into success");
                 Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, NormalStudentActivity.class);
+                switch(personType){
+                    case "1":{
+                        intent.setClass(LoginActivity.this, NormalStudentActivity.class);
+                        break;
+                    }
+                    case "2":{
+                        intent.setClass(LoginActivity.this, RepresentativeStudentActivity.class);
+                        break;
+                    }
+                    case "3":{
+                        intent.setClass(LoginActivity.this, TeacherActivity.class);
+                        break;
+                    }
+                    default:{
+                        intent.setClass(LoginActivity.this, CounselorActivity.class);
+                        break;
+                    }
+                }
                 EditText editText = (EditText)findViewById(R.id.email);
                 String message = editText.toString();
                 intent.putExtra(EXTRA_MESSAGE, message);

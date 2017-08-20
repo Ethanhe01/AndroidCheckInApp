@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 定位 -->
     <!-- 用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application
         android:allowBackup="true"
@@ -23,9 +23,9 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="b80fb77112e530b4a18f279be8b340d2"></meta-data>
+            android:value="b80fb77112e530b4a18f279be8b340d2" />
         <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
 
         <activity
             android:name=".LoginActivity"
@@ -41,7 +41,17 @@
             android:label="学生" />
         <activity
             android:name=".CheckInActivity"
-            android:label="@string/title_activity_check_in" />
+            android:label="签到" />
+        <activity
+            android:name=".RepresentativeStudentActivity"
+            android:label="课代表" />
+        <activity
+            android:name=".TeacherActivity"
+            android:label="任课教师" />
+        <activity
+            android:name=".CounselorActivity"
+            android:label="辅导员"></activity>
+        <activity android:name=".CourseTableActivity"></activity>
     </application>
 
 </manifest>

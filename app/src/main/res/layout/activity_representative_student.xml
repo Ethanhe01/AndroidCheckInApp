@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hys.checkinapp.NormalStudentActivity"
+    tools:context="com.example.hys.checkinapp.RepresentativeStudentActivity"
     android:baselineAligned="false">
 
     <!-- Login progress -->
@@ -81,6 +81,15 @@
                 android:text="@string/action_course_table"
                 android:textStyle="bold"
                 />
+            <Button
+                android:id="@+id/upload_picture_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_upload_picture"
+                android:textStyle="bold"
+            />
 
         </LinearLayout>
     </ScrollView>
