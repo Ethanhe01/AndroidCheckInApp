@@ -3,7 +3,10 @@ package com.example.hys.checkinapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -31,13 +34,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.hys.checkinapp.DataStruct;
+import java.util.logging.Handler;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    public final static String EXTRA_MESSAGE = "com.example.hys.checkinapp.MESSAGE";
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -49,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "2014301500035:123456", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -71,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -82,6 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -92,6 +102,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void signIn(){
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, NormalStudentActivity.class);
+        /*EditText editText = (EditText) findViewById(R.id.email);
+        String account = editText.getText().toString();
+        EditText editText1 = (EditText) findViewById(R.id.password);
+        String password = editText1.getText().toString();*/
+        //intent.putExtra(EXTRA_MESSAGE, account);
+        startActivity(intent);
+    }
+    private void signUp(View view){
+        System.out.println("into signUp");
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, NormalStudentActivity.class);
+        /*EditText editText = (EditText) findViewById(R.id.email);
+        String account = editText.getText().toString();
+        EditText editText1 = (EditText) findViewById(R.id.password);
+        String password = editText1.getText().toString();*/
+        //intent.putExtra(EXTRA_MESSAGE, account);
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {
@@ -143,6 +175,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+
+
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -192,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.length() > 9;
     }
 
     private boolean isPasswordValid(String password) {
@@ -333,6 +367,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                System.out.print("into success");
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, NormalStudentActivity.class);
+                EditText editText = (EditText)findViewById(R.id.email);
+                String message = editText.toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -346,5 +387,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
 }
 
