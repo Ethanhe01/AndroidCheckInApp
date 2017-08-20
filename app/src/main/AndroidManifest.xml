@@ -51,7 +51,9 @@
         <activity
             android:name=".CounselorActivity"
             android:label="辅导员"></activity>
-        <activity android:name=".CourseTableActivity"></activity>
+        <activity
+            android:name=".CourseTableActivity"
+            android:label="课程表"></activity>
     </application>
 
 </manifest>

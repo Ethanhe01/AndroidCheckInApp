@@ -80,6 +80,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_course_table"
                 android:textStyle="bold"
+                android:onClick="courseTable"
                 />
 
         </LinearLayout>
