@@ -36,8 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;//ArrayList;
+import java.net.*;
+import    java.text.SimpleDateFormat;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -57,6 +59,17 @@ import com.example.hys.checkinapp.DataStruct;
 import com.example.hys.util.AMapUtil;
 import com.example.hys.util.Utils;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -85,8 +98,67 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         Location();
+
+        /************* 点击“提交”按钮，将info写入数据库 ************/
+        Button mEmailSignInButton = (Button) findViewById(R.id.confirm_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recordCheckinInfo();
+            }
+        });
     }
 
+    private void recordCheckinInfo() {
+        String longitude = strMsg[1];//定位到的经度
+        String latitude = strMsg[2];//定位到的纬度
+        String StudentID = LoginActivity.email;//当前用户账号
+        String InTime = "";
+
+        /************** 获取北京时间，非系统时间 ****************/
+        SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        URL url = null;//取得资源对象
+        try {
+            url = new URL("http://www.baidu.com");
+            URLConnection uc = null;//生成连接对象
+            uc = url.openConnection();
+            uc.connect(); //发出连接
+            long ld = uc.getDate(); //取得网站日期时间
+            Date date = new Date(ld); //转换为标准时间对象
+            InTime = dff.format(date);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /****************** 连接服务器和DB *******************/
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkin");
+
+            List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+            params1.add(new BasicNameValuePair("Longitude", longitude));
+            params1.add(new BasicNameValuePair("Latitude", latitude));
+            params1.add(new BasicNameValuePair("ID", StudentID));
+            params1.add(new BasicNameValuePair("InTime", InTime));
+            final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params1, "utf-8");
+            httpPost.setEntity(entity);
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            int i = httpResponse.getStatusLine().getStatusCode();
+            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                HttpEntity entity1 = httpResponse.getEntity();
+                String response = EntityUtils.toString(entity1, "utf-8");
+                if(response.equals("true"))
+                    Toast.makeText(CheckInActivity.this, "签到成功", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(CheckInActivity.this, "签到失败，请重试！", Toast.LENGTH_LONG).show();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void initMap(){
@@ -123,12 +195,16 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                 //定位完成
                 case Utils.MSG_LOCATION_FINISH:
                     String result = "";
+                    String StudentID = LoginActivity.email;//获取当前用户账号
                     try {
                         AMapLocation loc = (AMapLocation) msg.obj;
                         result = Utils.getLocationStr(loc, 1);
                         strMsg = result.split(",");
                         Toast.makeText(CheckInActivity.this, "定位成功", Toast.LENGTH_LONG).show();
-                        textView.setText("地址：" + strMsg[0] + "\n" + "经    度：" + strMsg[1] + "\n" + "纬    度：" + strMsg[2]);
+
+
+
+                        textView.setText("地址：" + strMsg[0] + "\n" + "经    度：" + strMsg[1] + "\n" + "纬    度：" + strMsg[2] );
                         latLonPoint= new LatLonPoint(Double.valueOf(strMsg[2]), Double.valueOf(strMsg[1]));
                         initMap();
                     } catch (Exception e) {

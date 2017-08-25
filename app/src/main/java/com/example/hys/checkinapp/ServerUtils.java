@@ -1,4 +1,13 @@
-package com.byl.uploadimage;
+package com.example.hys.checkinapp;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -9,24 +18,60 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServerUtils {
 
 	/**
-	 * ÎÄ¼şÉÏ´«
+	 * æ–‡ä»¶ä¸Šä¼ 
 	 * 
-	 * @param urlStr
-	 * @param filePath
+	 * @param urlStr  æ¥å£è·¯å¾„
+	 * @param filePath  æœ¬åœ°å›¾ç‰‡è·¯å¾„
 	 * @return
 	 */
+
+	// Storage Permissions
+	/*private static final int REQUEST_EXTERNAL_STORAGE = 1;
+	private static String[] PERMISSIONS_STORAGE = {
+			Manifest.permission.READ_EXTERNAL_STORAGE,
+			Manifest.permission.WRITE_EXTERNAL_STORAGE
+	};*/
+
+	/**
+	 * Checks if the app has permission to write to device storage
+	 *
+	 * If the app does not has permission then the user will be prompted to grant permissions
+	 *
+	 * @param //activity
+	 */
+	/*public static void verifyStoragePermissions(Activity activity) {
+		// Check if we have write permission
+		int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+		if (permission != PackageManager.PERMISSION_GRANTED) {
+			// We don't have permission so prompt the user
+			ActivityCompat.requestPermissions(
+					activity,
+					PERMISSIONS_STORAGE,
+					REQUEST_EXTERNAL_STORAGE
+			);
+		}
+	}*/
+
 	public static String formUpload(String urlStr, String filePath) {
 		String rsp = "";
 		HttpURLConnection conn = null;
-		String BOUNDARY = "|"; // requestÍ·ºÍÉÏ´«ÎÄ¼şÄÚÈİ·Ö¸ô·û
+		String BOUNDARY = "|"; // requestå¤´å’Œä¸Šä¼ æ–‡ä»¶å†…å®¹åˆ†éš”ç¬¦
 		try {
+
+            /*List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+            params1.add(new BasicNameValuePair("ID", LoginActivity.email));
+            final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params1, "utf-8");
+            conn.setEntity(entity);*/
+
+
 			URL url = new URL(urlStr);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(5000);
@@ -36,10 +81,8 @@ public class ServerUtils {
 			conn.setUseCaches(false);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Connection", "Keep-Alive");
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
-			conn.setRequestProperty("Content-Type",
-					"multipart/form-data; boundary=" + BOUNDARY);
+			conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
+			conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
 
 			OutputStream out = new DataOutputStream(conn.getOutputStream());
 			File file = new File(filePath);
@@ -62,8 +105,7 @@ public class ServerUtils {
 			}
 			StringBuffer strBuf = new StringBuffer();
 			strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
-			strBuf.append("Content-Disposition: form-data; name=\"" + filePath
-					+ "\"; filename=\"" + filename + "\"\r\n");
+			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + " " + LoginActivity.email + "\"\r\n");
 			strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 			out.write(strBuf.toString().getBytes());
 			DataInputStream in = new DataInputStream(new FileInputStream(file));
@@ -78,7 +120,7 @@ public class ServerUtils {
 			out.flush();
 			out.close();
 
-			// ¶ÁÈ¡·µ»ØÊı¾İ
+			// è¯»å–è¿”å›æ•°æ®
 			StringBuffer buffer = new StringBuffer();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
 			String line = null;
