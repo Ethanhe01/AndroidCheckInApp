@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Message;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,18 +35,60 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 import com.example.hys.checkinapp.DataStruct;
-import java.util.logging.Handler;
+//import java.util.logging.Handler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     public final static String EXTRA_MESSAGE = "com.example.hys.checkinapp.MESSAGE";
+    public static String email="";
+
+    /**********public static final int SHOW_RESPONSE=1;
+    public Handler handler=new Handler() {
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what){
+                case SHOW_RESPONSE:
+                    String response=(String)msg.obj;
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };********************/
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -56,9 +99,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
+    /*private static final String[] DUMMY_CREDENTIALS = new String[]{
             "2014301500035:123456:1", "2014301500036:123456:2", "2014301500037:123456:3", "2014301500038:123456:4"
-    };
+    };*/
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -73,6 +116,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -103,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
     }
 
     private void signIn(){
@@ -188,7 +244,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        //String email = mEmailView.getText().toString();
+        email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -343,13 +400,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
+            /*********try {
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 return false;
-            }
+            }***********/
 
+            /*************** 改为连接服务器，在数据库表中找对应的用户名，并检查密码 ****************
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
@@ -357,11 +415,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     personType = pieces[2];
                     return pieces[1].equals(mPassword);
                 }
+            }*/
+
+
+            try {
+                HttpClient httpclient=new DefaultHttpClient();
+                HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
+                //HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:8080/HttpClientDemo/Login");
+
+                List<NameValuePair> params1=new ArrayList<NameValuePair>();
+                params1.add(new BasicNameValuePair("ID",mEmail));
+                params1.add(new BasicNameValuePair("PW",mPassword));
+                final UrlEncodedFormEntity entity=new UrlEncodedFormEntity(params1,"utf-8");
+                httpPost.setEntity(entity);
+                HttpResponse httpResponse= httpclient.execute(httpPost);
+                if(httpResponse.getStatusLine().getStatusCode()==200)
+                {
+                    HttpEntity entity1=httpResponse.getEntity();
+                    String response=EntityUtils.toString(entity1, "utf-8");
+
+                    String[] names = response.split("\\.");
+                    if(names[1].equals("true"))
+                    {
+                        personType = names[0];
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
 
             // TODO: register the new account here.
             return true;
         }
+
+
 
         @Override
         protected void onPostExecute(final Boolean success) {
@@ -405,6 +497,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    public String getID()
+    {
+        return email;
     }
 
 }
