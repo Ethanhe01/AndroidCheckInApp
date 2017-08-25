@@ -1,14 +1,14 @@
-package com.byl.uploadimage;
+package com.example.hys.checkinapp;
 
 public class Const {
 	
 	/**
-	 * Í¼Æ¬ÉÏ´«Â·¾¶
+	 * å›¾ç‰‡ä¸Šä¼ è·¯å¾„
 	 */
 	public static final String UPLOAD_URL="http://192.168.1.188:8080/uploadImage/UploadServlet";
 	
 	/**
-	 * Í¼Æ¬ÏÂÔØÂ·¾¶
+	 * å›¾ç‰‡ä¸‹è½½è·¯å¾„
 	 */
 	public static final String DOWNLOAD_URL="http://192.168.1.188:8080/uploadImage/upload/";
 
