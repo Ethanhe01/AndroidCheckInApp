@@ -33,4 +33,9 @@ public class RepresentativeStudentActivity extends AppCompatActivity {
         startActivity(intent);
         //intent.putExtra(EXTRA_MESSAGE, this.account);
     }
+
+    public void courseTable(View view){
+        Intent intent = new Intent(this,CourseTableActivity.class);
+        startActivity(intent);
+    }
 }
