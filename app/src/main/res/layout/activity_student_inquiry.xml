@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hys.checkinapp.NormalStudentActivity"
+    tools:context="com.example.hys.checkinapp.StudentInquiryActivity"
     android:baselineAligned="false">
 
     <!-- Login progress -->
@@ -30,59 +30,64 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/courseId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/prompt_courseId"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn"
+                android:layout_marginTop="10dp" />
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/viewResult"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_check_in"
                 android:textStyle="bold"
-                android:onClick="checkIn"
-                />
+                android:text="查询签到结果" />
 
             <Button
-                android:id="@+id/check_out_button"
+                android:id="@+id/btn"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_check_out"
                 android:textStyle="bold"
-                android:onClick="checkIn"
-                />
-            <Button
-                android:id="@+id/search_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_search"
-                android:textStyle="bold"
-                android:onClick="inquiry"
-                />
-            <Button
-                android:id="@+id/complain_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_complain"
-                android:textStyle="bold"
-                android:onClick="appeal"
-                />
-            <Button
-                android:id="@+id/course_table_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_course_table"
-                android:textStyle="bold"
-                android:onClick="courseTable"
-                />
+                android:text="查看图片" />
 
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn"
+                android:layout_marginTop="10dp" />
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/tv"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+
+

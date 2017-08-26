@@ -418,8 +418,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
             try {
+                /*
                 personType = "2";
-                if(1==1) return true;
+                if(1==1) return true;*/
                 HttpClient httpclient=new DefaultHttpClient();
                 HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
                 //HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:8080/HttpClientDemo/Login");
