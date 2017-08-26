@@ -55,7 +55,6 @@ import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
-import com.example.hys.checkinapp.DataStruct;
 import com.example.hys.util.AMapUtil;
 import com.example.hys.util.Utils;
 

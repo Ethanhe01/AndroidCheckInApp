@@ -36,7 +36,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import com.example.hys.checkinapp.DataStruct;
 //import java.util.logging.Handler;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -419,6 +418,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
             try {
+                /*
+                personType = "2";
+                if(1==1) return true;*/
                 HttpClient httpclient=new DefaultHttpClient();
                 HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
                 //HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:8080/HttpClientDemo/Login");

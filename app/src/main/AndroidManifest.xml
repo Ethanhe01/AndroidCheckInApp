@@ -46,17 +46,32 @@
             android:label="签到" />
         <activity
             android:name=".RepresentativeStudentActivity"
-            android:label="课代表" />
+            android:label="科代表" />
         <activity
-        android:name=".TeacherActivity"
-        android:label="任课教师" />
+            android:name=".TeacherActivity"
+            android:label="任课教师" />
         <activity
             android:name=".UploadImagesActivity"
             android:label="上传课堂照片" />
         <activity
             android:name=".CounselorActivity"
-            android:label="辅导员"></activity>
-        <activity android:name=".CourseTableActivity"></activity>
+            android:label="辅导员" />
+        <activity
+            android:name=".CourseTableActivity"
+            android:label="课程表" />
+        <activity
+            android:name=".AppealActivity"
+            android:label="申诉" />
+        <activity
+            android:name=".StudentInquiryActivity"
+            android:label="查询" />
+        <activity
+            android:name=".TeacherInquiryActivity"
+            android:label="查询"></activity>
+        <activity
+            android:name=".SetRatioActivity"
+            android:label="设置考勤成绩占比">
+        </activity>
     </application>
 
 </manifest>

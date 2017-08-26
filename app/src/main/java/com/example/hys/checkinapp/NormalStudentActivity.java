@@ -14,12 +14,9 @@ public class NormalStudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal_student);
-/*
         Intent intent = getIntent();
         String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
         this.account = message;
-        TextView layout = (TextView) findViewById((R.id.password));
-        layout.setText(message);*/
     }
 
     public void checkIn(View view){
@@ -28,5 +25,21 @@ public class NormalStudentActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void courseTable(View view){
+        Intent intent = new Intent(this,CourseTableActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
 
+    public void appeal(View view){
+        Intent intent = new Intent(this,AppealActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
+
+    public void inquiry(View view){
+        Intent intent = new Intent(this,StudentInquiryActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
 }

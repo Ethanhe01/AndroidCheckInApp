@@ -4,6 +4,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">账号</string>
     <string name="prompt_password">密码</string>
+    <string name="prompt_courseId">课程号</string>
+    <string name="prompt_ratio">考勤成绩所占百分比(1%-50%)</string>
     <string name="action_sign_in">登录</string>
     <string name="action_sign_up">注册</string>
     <string name="action_sign_in_short">登录</string>

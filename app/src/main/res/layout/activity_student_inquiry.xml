@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hys.checkinapp.UploadImagesActivity"
+    tools:context="com.example.hys.checkinapp.StudentInquiryActivity"
     android:baselineAligned="false">
 
     <!-- Login progress -->
@@ -30,6 +30,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/courseId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/prompt_courseId"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/viewResult"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                android:text="查询签到结果" />
+
             <Button
                 android:id="@+id/btn"
                 style="?android:textAppearanceSmall"
@@ -37,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="选择图片" />
+                android:text="查看图片" />
 
             <TextView
                 android:id="@+id/tv"
@@ -56,4 +89,5 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+
 
