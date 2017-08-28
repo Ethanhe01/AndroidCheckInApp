@@ -1,0 +1,48 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.hys.checkinapp.CheckOutActivity">
+
+    <TextView
+        android:id="@+id/text_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定位中......"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="22sp"
+        />
+
+    <EditText
+        android:id="@+id/courseId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/prompt_courseId"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/confirm_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/action_confirm"
+        android:textStyle="bold"
+        />
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="516dp"
+        />
+
+
+</LinearLayout>
