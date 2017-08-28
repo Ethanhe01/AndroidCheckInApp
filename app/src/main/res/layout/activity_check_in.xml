@@ -17,6 +17,17 @@
         android:textSize="22sp"
         />
 
+    <EditText
+        android:id="@+id/courseId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/prompt_courseId"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:maxLines="1"
+        android:singleLine="true" />
+
     <Button
         android:id="@+id/confirm_button"
         style="?android:textAppearanceSmall"

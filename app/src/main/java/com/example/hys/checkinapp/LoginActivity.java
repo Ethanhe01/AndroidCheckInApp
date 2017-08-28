@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private UserSignUpTask mAuthTaskSignup = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -152,6 +153,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+
+        Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
+        mEmailSignUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptSignUp();
             }
         });
 
@@ -278,6 +288,55 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+        }
+    }
+
+
+    private void attemptSignUp() {
+        if (mAuthTask != null) {
+            return;
+        }
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        //String email = mEmailView.getText().toString();
+        email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true);
+            mAuthTaskSignup = new UserSignUpTask(email, password);
+            mAuthTaskSignup.execute((Void) null);
         }
     }
 
@@ -465,16 +524,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 System.out.print("into success");
                 Intent intent = new Intent();
-                switch(personType){
-                    case "1":{
+                switch(Integer.parseInt(personType)%4){
+                    case 1:{
                         intent.setClass(LoginActivity.this, NormalStudentActivity.class);
                         break;
                     }
-                    case "2":{
+                    case 2:{
                         intent.setClass(LoginActivity.this, RepresentativeStudentActivity.class);
                         break;
                     }
-                    case "3":{
+                    case 3:{
                         intent.setClass(LoginActivity.this, TeacherActivity.class);
                         break;
                     }
@@ -500,6 +559,84 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+
+    public class UserSignUpTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mEmail;
+        private final String mPassword;
+        private String[] names;
+
+        UserSignUpTask(String email, String password) {
+            mEmail = email;
+            mPassword = password;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+            try {
+
+                HttpClient httpclient=new DefaultHttpClient();
+                HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Signup");
+
+                List<NameValuePair> params1=new ArrayList<NameValuePair>();
+                params1.add(new BasicNameValuePair("ID",mEmail));
+                params1.add(new BasicNameValuePair("PW",mPassword));
+                final UrlEncodedFormEntity entity=new UrlEncodedFormEntity(params1,"utf-8");
+                httpPost.setEntity(entity);
+                HttpResponse httpResponse= httpclient.execute(httpPost);
+                if(httpResponse.getStatusLine().getStatusCode()==200)
+                {
+                    HttpEntity entity1=httpResponse.getEntity();
+                    String response=EntityUtils.toString(entity1, "utf-8");
+
+                    names = response.split("\\.");
+                    if(names[0].equals("false"))
+                    {
+                        return false;
+                    }
+                    else if(names[2].equals("true"))
+                    {
+                        personType = names[1];
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            // TODO: register the new account here.
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            showProgress(false);
+
+            if (success) {
+                Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+            } else {
+                if(names[0].equals("false"))
+                    Toast.makeText(getApplicationContext(), "本账号已注册！", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                //mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
 
     public String getID()
     {

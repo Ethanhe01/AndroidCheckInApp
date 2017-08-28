@@ -89,12 +89,16 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
     private Marker geoMarker;
     private static LatLonPoint latLonPoint;
 
+    private EditText mCoursenumView=null;
+    private String CourseNum="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
         textView = (TextView) findViewById(R.id.text_map);
         mapView = (MapView) findViewById(R.id.map);
+        mCoursenumView = (EditText) findViewById(R.id.courseId);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         Location();
 
@@ -103,6 +107,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                CourseNum = mCoursenumView.getText().toString();
                 recordCheckinInfo();
             }
         });
@@ -140,6 +145,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             params1.add(new BasicNameValuePair("Longitude", longitude));
             params1.add(new BasicNameValuePair("Latitude", latitude));
             params1.add(new BasicNameValuePair("ID", StudentID));
+            params1.add(new BasicNameValuePair("CourseNum", CourseNum));
             params1.add(new BasicNameValuePair("InTime", InTime));
             final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params1, "utf-8");
             httpPost.setEntity(entity);
@@ -149,9 +155,9 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                 HttpEntity entity1 = httpResponse.getEntity();
                 String response = EntityUtils.toString(entity1, "utf-8");
                 if(response.equals("true"))
-                    Toast.makeText(CheckInActivity.this, "签到成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheckInActivity.this, "签到信息提交成功", Toast.LENGTH_LONG).show();
                 else
-                    Toast.makeText(CheckInActivity.this, "签到失败，请重试！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheckInActivity.this, "签到信息提交失败，请重试！", Toast.LENGTH_LONG).show();
             }
         }
         catch (Exception e) {

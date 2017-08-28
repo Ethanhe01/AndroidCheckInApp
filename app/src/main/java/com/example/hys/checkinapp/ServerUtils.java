@@ -105,7 +105,8 @@ public class ServerUtils {
 			}
 			StringBuffer strBuf = new StringBuffer();
 			strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
-			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + " " + LoginActivity.email + "\"\r\n");
+			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + "@"
+					      + LoginActivity.email + "@" + UploadImagesActivity.CurTime + "@" + UploadImagesActivity.CourseNum + "\"\r\n");
 			strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 			out.write(strBuf.toString().getBytes());
 			DataInputStream in = new DataInputStream(new FileInputStream(file));

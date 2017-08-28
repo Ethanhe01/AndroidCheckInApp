@@ -21,20 +21,31 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UploadImagesActivity extends Activity {
 	
-	ProgressDialog dialog=null;
-	String result="";
-	
-	Button btn=null;
-	TextView tv=null;
-    ImageView iv=null;
-    
-    FinalBitmap fb=null;
+	private ProgressDialog dialog=null;
+	private String result="";
+
+	private Button btn=null;
+	private TextView tv=null;
+	private ImageView iv=null;
+	private FinalBitmap fb=null;
+    private EditText mCoursenumView=null;
+
+	public static String CurTime="";
+    public static String CourseNum="";
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -75,14 +86,24 @@ public class UploadImagesActivity extends Activity {
 		dialog.setTitle("请稍后...");
 		
 		fb=FinalBitmap.create(this);
+        mCoursenumView = (EditText) findViewById(R.id.courseId);
 		
 		btn=(Button)findViewById(R.id.btn);
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-				openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-				startActivityForResult(openAlbumIntent, 1);
+                CourseNum = mCoursenumView.getText().toString();
+				if(CourseNum=="")
+				{
+					mCoursenumView.setError("请填写课程号");
+					mCoursenumView.requestFocus();
+				}
+				else
+				{
+					Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+					openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+					startActivityForResult(openAlbumIntent, 1);
+				}
 			}
 		});
 		
@@ -98,6 +119,25 @@ public class UploadImagesActivity extends Activity {
 		if (resultCode != RESULT_OK) {
 			return;
 		}
+
+		/************** 获取北京时间，非系统时间 ****************/
+		SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		URL url = null;//取得资源对象
+		try {
+			url = new URL("http://www.baidu.com");
+			URLConnection uc = null;//生成连接对象
+			uc = url.openConnection();
+			uc.connect(); //发出连接
+			long ld = uc.getDate(); //取得网站日期时间
+			Date date = new Date(ld); //转换为标准时间对象
+			CurTime = dff.format(date);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 		Uri uri = null;
 		switch (requestCode) {
 		case 1:// 相册
