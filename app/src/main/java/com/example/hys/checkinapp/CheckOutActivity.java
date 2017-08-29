@@ -83,7 +83,31 @@ public class CheckOutActivity extends AppCompatActivity implements AMapLocationL
             @Override
             public void onClick(View view) {
                 CourseNum = mCoursenumView.getText().toString();
-                recordCheckoutInfo();
+                CourseNum = mCoursenumView.getText().toString();
+                if(CourseNum==null)
+                {
+                    mCoursenumView.setError("请填写课程号");
+                    mCoursenumView.requestFocus();
+                }
+                else
+                {
+                    if(CourseNum.length()!=11)
+                    {
+                        mCoursenumView.setError("课程号有误，请检查！");
+                        mCoursenumView.requestFocus();
+                    }
+                    else
+                    {
+                        int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+                        if((iyear<2014)||(iyear>2067)){
+                            mCoursenumView.setError("课程号有误，请检查！");
+                            mCoursenumView.requestFocus();
+                        }
+                        else{
+                            recordCheckoutInfo();
+                        }
+                    }
+                }
             }
         });
     }
@@ -114,7 +138,8 @@ public class CheckOutActivity extends AppCompatActivity implements AMapLocationL
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkout");
+            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkout");
+            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Checkout");
 
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("Longitude", longitude));

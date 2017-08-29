@@ -74,10 +74,16 @@ public class TeacherInquiryActivity extends AppCompatActivity {
         String month = names[1];
         String day = names[2];
 
+        int m = Integer.parseInt(month);
+        if(m==1)
+            m=12;
+        else
+            m--;
+
 
         /* 选择要查询的记录产生的日期*/
         datePicker = (DatePicker) findViewById(R.id.datePicker);
-        datePicker.init(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
+        datePicker.init(Integer.parseInt(year), m, Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // 获取一个日历对象，并初始化为当前选中的时间
@@ -96,13 +102,30 @@ public class TeacherInquiryActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 Toast.makeText(TeacherInquiryActivity.this, "要查询的时间是："+time, Toast.LENGTH_SHORT).show();
                 CourseNum = mCoursenumView.getText().toString();
-                if(CourseNum=="")
+                if(CourseNum==null)
                 {
                     mCoursenumView.setError("请填写课程号");
                     mCoursenumView.requestFocus();
                 }
                 else
-                    getPic();
+                {
+                    if(CourseNum.length()!=11)
+                    {
+                        mCoursenumView.setError("课程号有误，请检查！");
+                        mCoursenumView.requestFocus();
+                    }
+                    else
+                    {
+                        int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+                        if((iyear<2014)||(iyear>2067)){
+                            mCoursenumView.setError("课程号有误，请检查！");
+                            mCoursenumView.requestFocus();
+                        }
+                        else{
+                            getPic();
+                        }
+                    }
+                }
             }
         });
 
@@ -113,13 +136,30 @@ public class TeacherInquiryActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 Toast.makeText(TeacherInquiryActivity.this, "要查询的时间是："+time, Toast.LENGTH_SHORT).show();
                 CourseNum = mCoursenumView.getText().toString();
-                if(CourseNum=="")
+                if(CourseNum==null)
                 {
                     mCoursenumView.setError("请填写课程号");
                     mCoursenumView.requestFocus();
                 }
                 else
-                    showAttendanceInfo();
+                {
+                    if(CourseNum.length()!=11)
+                    {
+                        mCoursenumView.setError("课程号有误，请检查！");
+                        mCoursenumView.requestFocus();
+                    }
+                    else
+                    {
+                        int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+                        if((iyear<2014)||(iyear>2067)){
+                            mCoursenumView.setError("课程号有误，请检查！");
+                            mCoursenumView.requestFocus();
+                        }
+                        else{
+                            showAttendanceInfo();
+                        }
+                    }
+                }
             }
         });
 
@@ -131,8 +171,8 @@ public class TeacherInquiryActivity extends AppCompatActivity {
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryImage");
-
+            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryImage");
+            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/QueryImage");
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));//要查询的课程号
             params1.add(new BasicNameValuePair("Time", time));//要查询的时间
@@ -160,7 +200,8 @@ public class TeacherInquiryActivity extends AppCompatActivity {
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryResult_teacher");
+            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryResult_teacher");
+            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/QueryResult_teacher");
 
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));//要查询的课程号

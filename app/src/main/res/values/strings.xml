@@ -13,7 +13,7 @@
     <string name="action_sign_up">注册</string>
     <string name="action_sign_in_short">登录</string>
     <string name="error_invalid_email">该账号无效</string>
-    <string name="error_invalid_password">该密码过短</string>
+    <string name="error_invalid_password">该密码格式错误</string>
     <string name="error_incorrect_password">密码错误</string>
     <string name="error_field_required">必填项</string>
     <string name="action_check_in">签到</string>
