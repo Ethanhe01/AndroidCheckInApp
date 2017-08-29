@@ -45,6 +45,9 @@
             android:name=".CheckInActivity"
             android:label="签到" />
         <activity
+            android:name=".CheckOutActivity"
+            android:label="签退" />
+        <activity
             android:name=".RepresentativeStudentActivity"
             android:label="科代表" />
         <activity

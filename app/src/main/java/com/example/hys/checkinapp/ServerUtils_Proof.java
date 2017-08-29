@@ -1,14 +1,5 @@
 package com.example.hys.checkinapp;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -18,11 +9,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class ServerUtils {
+public class ServerUtils_Proof {
 
 	/**
 	 * 文件上传
@@ -105,8 +94,8 @@ public class ServerUtils {
 			}
 			StringBuffer strBuf = new StringBuffer();
 			strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
-			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + "@"
-					      + LoginActivity.email + "@" + UploadImagesActivity.CurTime + "@" + UploadImagesActivity.CourseNum + "\"\r\n");
+			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + "@" + LoginActivity.email + "@"
+					      +AppealActivity.CourseNum + "@" + AppealActivity.CurTime + "\"\r\n");
 			strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 			out.write(strBuf.toString().getBytes());
 			DataInputStream in = new DataInputStream(new FileInputStream(file));

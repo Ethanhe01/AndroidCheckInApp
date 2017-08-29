@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.hys.checkinapp.CheckInActivity">
+    tools:context="com.example.hys.checkinapp.CheckOutActivity">
 
     <TextView
         android:id="@+id/text_map"

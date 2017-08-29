@@ -27,6 +27,13 @@ public class RepresentativeStudentActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, this.account);
     }
 
+    public void checkOut(View view){
+        Intent intent = new Intent();
+        intent.setClass(RepresentativeStudentActivity.this, CheckOutActivity.class);
+        startActivity(intent);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+    }
+
     public void uploadImage(View view){
         Intent intent = new Intent();
         intent.setClass(RepresentativeStudentActivity.this, UploadImagesActivity.class);
