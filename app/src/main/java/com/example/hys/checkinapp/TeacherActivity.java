@@ -27,4 +27,16 @@ public class TeacherActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, this.account);
         startActivity(intent);
     }
+
+    public void checkIn(View view){
+        Intent intent = new Intent(this,CheckInActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
+
+    public void checkOut(View view){
+        Intent intent = new Intent(this,CheckOutActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
 }
