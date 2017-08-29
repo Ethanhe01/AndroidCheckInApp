@@ -231,10 +231,14 @@ public class TeacherInquiryActivity extends AppCompatActivity {
                         String cur_ID = record[0];//当前记录的学生ID
                         if(record[1].equals("Y"))
                             inresult = "成功";
+                        else if(record[1].equals("null"))
+                            inresult = "待判定";
                         else
                             inresult = "失败";
                         if(record[2].equals("Y"))
                             outresult = "成功";
+                        else if (record[2].equals("null"))
+                            outresult = "待判定";
                         else
                             outresult = "失败";
                         result = result + cur_ID + "    签到：" + inresult + "    签退：" + outresult + "\n";
