@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -108,7 +109,30 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             @Override
             public void onClick(View view) {
                 CourseNum = mCoursenumView.getText().toString();
-                recordCheckinInfo();
+                if(CourseNum==null)
+                {
+                    mCoursenumView.setError("请填写课程号");
+                    mCoursenumView.requestFocus();
+                }
+                else
+                {
+                    if(CourseNum.length()!=11)
+                    {
+                        mCoursenumView.setError("课程号有误，请检查！");
+                        mCoursenumView.requestFocus();
+                    }
+                    else
+                    {
+                        int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+                        if((iyear<2014)||(iyear>2067)){
+                            mCoursenumView.setError("课程号有误，请检查！");
+                            mCoursenumView.requestFocus();
+                        }
+                        else{
+                            recordCheckinInfo();
+                        }
+                    }
+                }
             }
         });
     }
@@ -139,8 +163,8 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkin");
-
+            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkin");
+            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Checkin");
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("Longitude", longitude));
             params1.add(new BasicNameValuePair("Latitude", latitude));

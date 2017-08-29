@@ -265,6 +265,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
+        }else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
         }
 
         // Check for a valid email address.
@@ -314,6 +318,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
+        }else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
         }
 
         // Check for a valid email address.
@@ -342,12 +350,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.length() > 9;
+        boolean check1,check2=true;
+        check1 = ((email.length() == 8) || (email.length() == 13));
+        String sub = email.substring(0,4);//取出前4位
+        int year = Integer.parseInt(sub);
+        if((year<2014)||(year>2067))
+            check2=false;
+        return check1&check2;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return ((password.length() >= 6)&&(password.length() <= 18) && (password.matches("^[a-z0-9A-Z\u4e00-\u9fa5]+$")));
+        //6-18位，且只包含字母和数字
     }
 
     /**
@@ -481,8 +496,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 personType = "2";
                 if(1==1) return true;*/
                 HttpClient httpclient=new DefaultHttpClient();
-                HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
-                //HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:8080/HttpClientDemo/Login");
+                //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
+                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Login");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));
@@ -578,7 +593,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
 
                 HttpClient httpclient=new DefaultHttpClient();
-                HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Signup");
+                //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Signup");
+                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Signup");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));

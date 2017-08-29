@@ -92,17 +92,32 @@ public class UploadImagesActivity extends Activity {
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-                CourseNum = mCoursenumView.getText().toString();
-				if(CourseNum=="")
+				CourseNum = mCoursenumView.getText().toString();
+				if(CourseNum==null)
 				{
 					mCoursenumView.setError("请填写课程号");
 					mCoursenumView.requestFocus();
 				}
 				else
 				{
-					Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-					openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-					startActivityForResult(openAlbumIntent, 1);
+					if(CourseNum.length()!=11)
+					{
+						mCoursenumView.setError("课程号有误，请检查！");
+						mCoursenumView.requestFocus();
+					}
+					else
+					{
+						int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+						if((iyear<2014)||(iyear>2067)){
+							mCoursenumView.setError("课程号有误，请检查！");
+							mCoursenumView.requestFocus();
+						}
+						else{
+							Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+							openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+							startActivityForResult(openAlbumIntent, 1);
+						}
+					}
 				}
 			}
 		});

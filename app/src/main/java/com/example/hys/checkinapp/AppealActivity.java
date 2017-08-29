@@ -44,9 +44,10 @@ public class AppealActivity extends AppCompatActivity {
     public static String CurTime="";
 
     private String result="";
-    private final String UploadUrl = "http://192.168.191.1:8080/HttpClientDemo/UploadProof";
-    private final String DownloadUrl = "http://192.168.191.1:8080/HttpClientDemo/proof/";
-
+    //private final String UploadUrl = "http://192.168.191.1:8080/HttpClientDemo/UploadProof";
+    //private final String DownloadUrl = "http://192.168.191.1:8080/HttpClientDemo/proof/";
+    private final String UploadUrl = "http://18131q29d3.51mypc.cn:28420/HttpClientDemo/UploadProof";
+    private final String DownloadUrl = "http://18131q29d3.51mypc.cn:28420/HttpClientDemo/proof/";
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -96,16 +97,31 @@ public class AppealActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 CourseNum = mCoursenumView.getText().toString();
-                if(CourseNum=="")
+                if(CourseNum==null)
                 {
                     mCoursenumView.setError("请填写课程号");
                     mCoursenumView.requestFocus();
                 }
                 else
                 {
-                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                    startActivityForResult(openAlbumIntent, 1);
+                    if(CourseNum.length()!=11)
+                    {
+                        mCoursenumView.setError("课程号有误，请检查！");
+                        mCoursenumView.requestFocus();
+                    }
+                    else
+                    {
+                        int iyear = Integer.parseInt(CourseNum.substring(0,4));//前4位
+                        if((iyear<2014)||(iyear>2067)){
+                            mCoursenumView.setError("课程号有误，请检查！");
+                            mCoursenumView.requestFocus();
+                        }
+                        else{
+                            Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                            openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                            startActivityForResult(openAlbumIntent, 1);
+                        }
+                    }
                 }
             }
         });
