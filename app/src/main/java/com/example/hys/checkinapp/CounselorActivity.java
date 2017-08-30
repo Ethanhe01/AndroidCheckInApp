@@ -9,6 +9,8 @@ import static com.example.hys.checkinapp.TeacherActivity.EXTRA_MESSAGE;
 
 public class CounselorActivity extends AppCompatActivity {
 
+    public final static String EXTRA_MESSAGE = "com.example.hys.checkinapp.MESSAGE1";
+
     private String account;
 
     @Override
@@ -18,11 +20,21 @@ public class CounselorActivity extends AppCompatActivity {
     }
 
     public void counselorSearch(View view){
-        Intent intent = new Intent(this,TeacherInquiryActivity.class);
+        Intent intent = new Intent(this,CounselorInquiryActivity.class);
         intent.putExtra(EXTRA_MESSAGE, this.account);
         startActivity(intent);
     }
 
+    public void recheck(View view){
+        Intent intent = new Intent(this,HandleAppealActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
 
+    public void setPunishment(View view){
+        Intent intent = new Intent(this,SetPunishmentActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
 
 }

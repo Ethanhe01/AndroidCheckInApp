@@ -7,7 +7,7 @@ android:paddingBottom="@dimen/activity_vertical_margin"
 android:paddingLeft="@dimen/activity_horizontal_margin"
 android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
-tools:context="com.example.hys.checkinapp.TeacherInquiryActivity"
+tools:context="com.example.hys.checkinapp.HandleAppealActivity"
 android:baselineAligned="false">
 
 <!-- Login progress -->
@@ -29,7 +29,6 @@ android:baselineAligned="false">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -55,11 +54,12 @@ android:baselineAligned="false">
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
-            android:text="获取当天课程号列表" />
+            android:text="查询当天复查申请列表" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/courseId"
                 android:layout_width="match_parent"
@@ -70,16 +70,24 @@ android:baselineAligned="false">
                 android:imeOptions="actionUnspecified"
                 android:maxLines="1"
                 android:singleLine="true" />
+
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/viewResult"
-            style="?android:textAppearanceSmall"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold"
-            android:text="查询签到结果" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/studentId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="学生账号"
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btn"
@@ -88,23 +96,10 @@ android:baselineAligned="false">
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
-            android:text="查看图片" />
+            android:text="获取单个复查申请" />
 
-        <EditText
-            android:id="@+id/tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
-
-        <ImageView
-            android:id="@+id/iv"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/tv"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"/>
     </LinearLayout>
 </ScrollView>
 </LinearLayout>
+
 
