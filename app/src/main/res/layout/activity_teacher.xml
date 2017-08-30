@@ -52,6 +52,28 @@
                 android:onClick="setRatio"
                 />
 
+            <Button
+                android:id="@+id/start_checkin"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="开启签到"
+                android:textStyle="bold"
+                android:onClick="checkIn"
+                />
+
+            <Button
+                android:id="@+id/start_checkout"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="开启签退"
+                android:textStyle="bold"
+                android:onClick="checkOut"
+                />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

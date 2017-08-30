@@ -227,10 +227,14 @@ public class StudentInquiryActivity extends AppCompatActivity {
                 {
                     if(inresult.equals("Y"))
                         inresult = "成功";
+                    else if(inresult.equals("null"))
+                        inresult = "待判定";
                     else
                         inresult = "失败";
                     if(outresult.equals("Y"))
                         outresult = "成功";
+                    else if(outresult.equals("null"))
+                        outresult = "待判定";
                     else
                         outresult = "失败";
                     String result = "签到："+inresult + "       签退："+outresult;
