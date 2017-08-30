@@ -5,6 +5,8 @@
     <string name="prompt_email">账号</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_courseId">课程号</string>
+    <string name="prompt_courseIdInPunishment">课程号,默认当天所有课程</string>
+    <string name="prompt_punishment">在此输入代签处分通知</string>
     <string name="prompt_year">年份</string>
     <string name="prompt_month">月</string>
     <string name="prompt_day">日</string>

@@ -70,11 +70,19 @@
             android:label="查询" />
         <activity
             android:name=".TeacherInquiryActivity"
-            android:label="查询"></activity>
+            android:label="查询" />
         <activity
             android:name=".SetRatioActivity"
-            android:label="设置考勤成绩占比">
-        </activity>
+            android:label="设置考勤成绩占比" />
+        <activity
+            android:name=".HandleAppealActivity"
+            android:label="处理复查申请" />
+        <activity
+            android:name=".CounselorInquiryActivity"
+            android:label="查询"  />
+        <activity
+            android:name=".SetPunishmentActivity"
+            android:label="处分通知" ></activity>
     </application>
 
 </manifest>
