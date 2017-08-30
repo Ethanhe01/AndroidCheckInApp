@@ -36,8 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textStyle="bold"
-                android:text="选择图片" />
+                android:text="选择图片"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/courseId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/prompt_courseId"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:maxLines="1"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/tv"
@@ -52,7 +63,7 @@
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/tv"
                 android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

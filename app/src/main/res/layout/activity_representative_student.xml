@@ -50,7 +50,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_check_out"
                 android:textStyle="bold"
-                android:onClick="checkIn"
+                android:onClick="checkOut"
                 />
             <Button
                 android:id="@+id/search_button"

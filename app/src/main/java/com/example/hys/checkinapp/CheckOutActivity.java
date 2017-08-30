@@ -1,46 +1,16 @@
 package com.example.hys.checkinapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
-
-import java.io.IOException;
-import java.util.*;//ArrayList;
-import java.net.*;
-import    java.text.SimpleDateFormat;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -69,15 +39,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import static android.Manifest.permission.INTERNET;
-import static android.Manifest.permission.READ_CONTACTS;
-import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class CheckInActivity extends AppCompatActivity implements AMapLocationListener,GeocodeSearch.OnGeocodeSearchListener {
+public class CheckOutActivity extends AppCompatActivity implements AMapLocationListener,GeocodeSearch.OnGeocodeSearchListener {
     public final static String EXTRA_MESSAGE = "com.example.hys.checkinapp.MESSAGE";
 
     private AMapLocationClient locationClient = null;
@@ -109,6 +83,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             @Override
             public void onClick(View view) {
                 CourseNum = mCoursenumView.getText().toString();
+                CourseNum = mCoursenumView.getText().toString();
                 if(CourseNum==null)
                 {
                     mCoursenumView.setError("请填写课程号");
@@ -129,7 +104,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                             mCoursenumView.requestFocus();
                         }
                         else{
-                            recordCheckinInfo();
+                            recordCheckoutInfo();
                         }
                     }
                 }
@@ -137,11 +112,11 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         });
     }
 
-    private void recordCheckinInfo() {
+    private void recordCheckoutInfo() {
         String longitude = strMsg[1];//定位到的经度
         String latitude = strMsg[2];//定位到的纬度
         String StudentID = LoginActivity.email;//当前用户账号
-        String InTime = "";
+        String OutTime = "";
 
         /************** 获取北京时间，非系统时间 ****************/
         SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -153,7 +128,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             uc.connect(); //发出连接
             long ld = uc.getDate(); //取得网站日期时间
             Date date = new Date(ld); //转换为标准时间对象
-            InTime = dff.format(date);
+            OutTime = dff.format(date);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -163,14 +138,15 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkin");
-            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Checkin");
+            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkout");
+            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Checkout");
+
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("Longitude", longitude));
             params1.add(new BasicNameValuePair("Latitude", latitude));
-            params1.add(new BasicNameValuePair("ID", StudentID));
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));
-            params1.add(new BasicNameValuePair("InTime", InTime));
+            params1.add(new BasicNameValuePair("ID", StudentID));
+            params1.add(new BasicNameValuePair("OutTime", OutTime));
             final UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params1, "utf-8");
             httpPost.setEntity(entity);
             HttpResponse httpResponse = httpclient.execute(httpPost);
@@ -179,9 +155,9 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                 HttpEntity entity1 = httpResponse.getEntity();
                 String response = EntityUtils.toString(entity1, "utf-8");
                 if(response.equals("true"))
-                    Toast.makeText(CheckInActivity.this, "签到信息提交成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheckOutActivity.this, "签退信息提交成功", Toast.LENGTH_LONG).show();
                 else
-                    Toast.makeText(CheckInActivity.this, "签到信息提交失败，请重试！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheckOutActivity.this, "签退信息提交失败，请重试！", Toast.LENGTH_LONG).show();
             }
         }
         catch (Exception e) {
@@ -219,7 +195,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
     }
 
     Handler mHandler = new Handler() {
-        public void dispatchMessage(android.os.Message msg) {
+        public void dispatchMessage(Message msg) {
             switch (msg.what) {
                 //定位完成
                 case Utils.MSG_LOCATION_FINISH:
@@ -229,7 +205,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                         AMapLocation loc = (AMapLocation) msg.obj;
                         result = Utils.getLocationStr(loc, 1);
                         strMsg = result.split(",");
-                        Toast.makeText(CheckInActivity.this, "定位成功", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CheckOutActivity.this, "定位成功", Toast.LENGTH_LONG).show();
 
 
 
@@ -237,7 +213,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
                         latLonPoint= new LatLonPoint(Double.valueOf(strMsg[2]), Double.valueOf(strMsg[1]));
                         initMap();
                     } catch (Exception e) {
-                        Toast.makeText(CheckInActivity.this, "定位失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CheckOutActivity.this, "定位失败", Toast.LENGTH_LONG).show();
                     }
                     break;
                 default:
@@ -262,7 +238,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             locationClient.startLocation();
             mHandler.sendEmptyMessage(Utils.MSG_LOCATION_START);
         } catch (Exception e) {
-            Toast.makeText(CheckInActivity.this, "定位失败", Toast.LENGTH_LONG).show();
+            Toast.makeText(CheckOutActivity.this, "定位失败", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -293,7 +269,7 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
 
-                Toast.makeText(CheckInActivity.this,result.getRegeocodeAddress().getFormatAddress()
+                Toast.makeText(CheckOutActivity.this,result.getRegeocodeAddress().getFormatAddress()
                         + "附近",Toast.LENGTH_LONG).show();
                 aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                         AMapUtil.convertToLatLng(latLonPoint), 15));

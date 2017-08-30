@@ -25,6 +25,12 @@ public class NormalStudentActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void checkOut(View view){
+        Intent intent = new Intent(this,CheckOutActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.account);
+        startActivity(intent);
+    }
+
     public void courseTable(View view){
         Intent intent = new Intent(this,CourseTableActivity.class);
         intent.putExtra(EXTRA_MESSAGE, this.account);
