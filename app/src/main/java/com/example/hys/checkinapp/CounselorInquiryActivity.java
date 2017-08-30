@@ -8,6 +8,6 @@ public class CounselorInquiryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_counselor_inquiry2);
+        setContentView(R.layout.activity_counselor_inquiry);
     }
 }
