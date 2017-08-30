@@ -350,13 +350,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        boolean check1,check2=true;
+        /*boolean check1,check2=true;
         check1 = ((email.length() == 8) || (email.length() == 13));
         String sub = email.substring(0,4);//取出前4位
         int year = Integer.parseInt(sub);
-        if((year<2014)||(year>2067))
-            check2=false;
-        return check1&check2;
+        if((year!=0)&&(year!=200)) {
+            if ((year < 2014) || (year > 2067))
+                check2 = false;
+        }
+        return check1&check2;*/
+        return ((email.length() == 8) || (email.length() == 13));
     }
 
     private boolean isPasswordValid(String password) {
@@ -497,7 +500,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(1==1) return true;*/
                 HttpClient httpclient=new DefaultHttpClient();
                 //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
-                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Login");
+                HttpPost httpPost=new HttpPost("http://008271b.nat123.cc/HttpClientDemo/Login");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));
@@ -594,7 +597,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 HttpClient httpclient=new DefaultHttpClient();
                 //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Signup");
-                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Signup");
+                HttpPost httpPost=new HttpPost("http://008271b.nat123.cc/HttpClientDemo/Signup");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));

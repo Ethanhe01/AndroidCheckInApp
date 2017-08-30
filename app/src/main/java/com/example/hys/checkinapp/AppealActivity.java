@@ -46,8 +46,8 @@ public class AppealActivity extends AppCompatActivity {
     private String result="";
     //private final String UploadUrl = "http://192.168.191.1:8080/HttpClientDemo/UploadProof";
     //private final String DownloadUrl = "http://192.168.191.1:8080/HttpClientDemo/proof/";
-    private final String UploadUrl = "http://18131q29d3.51mypc.cn:28420/HttpClientDemo/UploadProof";
-    private final String DownloadUrl = "http://18131q29d3.51mypc.cn:28420/HttpClientDemo/proof/";
+    private final String UploadUrl = "http://008271b.nat123.cc/HttpClientDemo/UploadProof";
+    private final String DownloadUrl = "http://008271b.nat123.cc/HttpClientDemo/proof/";
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
