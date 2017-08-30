@@ -497,7 +497,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(1==1) return true;*/
                 HttpClient httpclient=new DefaultHttpClient();
                 //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Login");
-                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Login");
+                HttpPost httpPost=new HttpPost("http://008271b.nat123.cc/HttpClientDemo/Login");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));
@@ -594,7 +594,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 HttpClient httpclient=new DefaultHttpClient();
                 //HttpPost httpPost=new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Signup");
-                HttpPost httpPost=new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Signup");
+                HttpPost httpPost=new HttpPost("http://008271b.nat123.cc/HttpClientDemo/Signup");
 
                 List<NameValuePair> params1=new ArrayList<NameValuePair>();
                 params1.add(new BasicNameValuePair("ID",mEmail));
