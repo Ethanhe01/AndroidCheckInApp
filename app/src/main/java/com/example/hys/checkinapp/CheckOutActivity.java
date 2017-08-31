@@ -70,7 +70,7 @@ public class CheckOutActivity extends AppCompatActivity implements AMapLocationL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_in);
+        setContentView(R.layout.activity_check_out);
         textView = (TextView) findViewById(R.id.text_map);
         mapView = (MapView) findViewById(R.id.map);
         mCoursenumView = (EditText) findViewById(R.id.courseId);
