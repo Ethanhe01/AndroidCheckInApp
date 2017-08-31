@@ -75,7 +75,7 @@ public class SetRatioActivity extends AppCompatActivity {
         try {
             HttpClient httpclient = new DefaultHttpClient();
             //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Uploadratio");
-            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Uploadratio");
+            HttpPost httpPost = new HttpPost("http://18k22437d2.iask.in:20267/HttpClientDemo/Uploadratio");
 
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));

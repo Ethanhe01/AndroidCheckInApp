@@ -163,8 +163,8 @@ public class CheckInActivity extends AppCompatActivity implements AMapLocationLi
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkin");
-            HttpPost httpPost = new HttpPost("http://18131q29d3.51mypc.cn:28420/HttpClientDemo/Checkin");
+            //HttpPost httpPost = new HttpPost("http://230827c8.nat123.cc:48777/HttpClientDemo/Checkin");
+            HttpPost httpPost = new HttpPost("http://18k22437d2.iask.in:20267/HttpClientDemo/Checkin");
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("Longitude", longitude));
             params1.add(new BasicNameValuePair("Latitude", latitude));

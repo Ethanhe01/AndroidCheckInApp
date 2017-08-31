@@ -95,7 +95,7 @@ public class ServerUtils_Proof {
 			StringBuffer strBuf = new StringBuffer();
 			strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
 			strBuf.append("Content-Disposition: form-data; name=\"" + filePath + "\"; filename=\"" + filename + "@" + LoginActivity.email + "@"
-					      +AppealActivity.CourseNum + "@" + AppealActivity.CurTime + "\"\r\n");
+					      +AppealActivity.CourseNum + "@" + AppealActivity.CurTime + "@" + AppealActivity.CourseTime + "\"\r\n");
 			strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 			out.write(strBuf.toString().getBytes());
 			DataInputStream in = new DataInputStream(new FileInputStream(file));
