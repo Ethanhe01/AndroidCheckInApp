@@ -20,7 +20,7 @@ public class CounselorActivity extends AppCompatActivity {
     }
 
     public void counselorSearch(View view){
-        Intent intent = new Intent(this,CounselorInquiryActivity.class);
+        Intent intent = new Intent(this,TeacherInquiryActivity.class);
         intent.putExtra(EXTRA_MESSAGE, this.account);
         startActivity(intent);
     }

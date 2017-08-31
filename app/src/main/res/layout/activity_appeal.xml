@@ -47,6 +47,20 @@ android:baselineAligned="false">
 
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="0.30"
+            android:text="选择课程时间" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/btn"
             style="?android:textAppearanceSmall"

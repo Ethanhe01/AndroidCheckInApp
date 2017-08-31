@@ -138,8 +138,8 @@ public class CheckOutActivity extends AppCompatActivity implements AMapLocationL
         /****************** 连接服务器和DB *******************/
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/Checkout");
-            HttpPost httpPost = new HttpPost("http://008271b.nat123.cc/HttpClientDemo/Checkout");
+            //HttpPost httpPost = new HttpPost("http://230827c8.nat123.cc:48777/HttpClientDemo/Checkout");
+            HttpPost httpPost = new HttpPost("http://18k22437d2.iask.in:20267/HttpClientDemo/Checkout");
 
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("Longitude", longitude));

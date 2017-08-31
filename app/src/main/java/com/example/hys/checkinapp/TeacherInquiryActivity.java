@@ -172,7 +172,7 @@ public class TeacherInquiryActivity extends AppCompatActivity {
         try {
             HttpClient httpclient = new DefaultHttpClient();
             //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryImage");
-            HttpPost httpPost = new HttpPost("http://008271b.nat123.cc/HttpClientDemo/QueryImage");
+            HttpPost httpPost = new HttpPost("http://18k22437d2.iask.in:20267/HttpClientDemo/QueryImage");
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));//要查询的课程号
             params1.add(new BasicNameValuePair("Time", time));//要查询的时间
@@ -201,7 +201,7 @@ public class TeacherInquiryActivity extends AppCompatActivity {
         try {
             HttpClient httpclient = new DefaultHttpClient();
             //HttpPost httpPost = new HttpPost("http://192.168.191.1:8080/HttpClientDemo/QueryResult_teacher");
-            HttpPost httpPost = new HttpPost("http://008271b.nat123.cc/HttpClientDemo/QueryResult_teacher");
+            HttpPost httpPost = new HttpPost("http://18k22437d2.iask.in:20267/HttpClientDemo/QueryResult_teacher");
 
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             params1.add(new BasicNameValuePair("CourseNum", CourseNum));//要查询的课程号

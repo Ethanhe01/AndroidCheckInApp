@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AppealActivity extends AppCompatActivity {
@@ -39,15 +41,18 @@ public class AppealActivity extends AppCompatActivity {
     private FinalBitmap fb=null;
     private TextView tv=null;
     private ImageView iv=null;
+    private DatePicker datePicker=null;
 
     public static String CourseNum="";
     public static String CurTime="";
+    public static String CourseTime = "";
 
-    private String result="";
-    //private final String UploadUrl = "http://192.168.191.1:8080/HttpClientDemo/UploadProof";
-    //private final String DownloadUrl = "http://192.168.191.1:8080/HttpClientDemo/proof/";
-    private final String UploadUrl = "http://008271b.nat123.cc/HttpClientDemo/UploadProof";
-    private final String DownloadUrl = "http://008271b.nat123.cc/HttpClientDemo/proof/";
+    private String result = "";
+
+    //private final String UploadUrl = "http://230827c8.nat123.cc:48777/HttpClientDemo/UploadProof";
+    //private final String DownloadUrl = "http://230827c8.nat123.cc:48777/HttpClientDemo/proof/";
+    private final String UploadUrl = "http://18k22437d2.iask.in:20267/HttpClientDemo/UploadProof";
+    private final String DownloadUrl = "http://18k22437d2.iask.in:20267/HttpClientDemo/proof/";
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -90,6 +95,48 @@ public class AppealActivity extends AppCompatActivity {
         dialog=new ProgressDialog(this);
         dialog.setTitle("请稍后...");
 
+        /************** 获取北京时间，作为默认的查询时间 ****************/
+        SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd");
+        URL url = null;//取得资源对象
+        try {
+            url = new URL("http://www.baidu.com");
+            URLConnection uc = null;//生成连接对象
+            uc = url.openConnection();
+            uc.connect(); //发出连接
+            long ld = uc.getDate(); //取得网站日期时间
+            Date date = new Date(ld); //转换为标准时间对象
+            CourseTime = dff.format(date);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] names = CourseTime.split("-");
+        String year = names[0];
+        String month = names[1];
+        String day = names[2];
+
+        int m = Integer.parseInt(month);
+        if(m==1)
+            m=12;
+        else
+            m--;
+
+        /* 选择要查询的记录产生的日期*/
+        datePicker = (DatePicker) findViewById(R.id.datePicker);
+        datePicker.init(Integer.parseInt(year), m, Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // 获取一个日历对象，并初始化为当前选中的时间
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                CourseTime = format.format(calendar.getTime());
+                //Toast.makeText(StudentInquiryActivity.this, "要查询的时间是："+time, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         fb=FinalBitmap.create(this);
 
         btn=(Button)findViewById(R.id.btn);
@@ -97,6 +144,8 @@ public class AppealActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 CourseNum = mCoursenumView.getText().toString();
+                Toast.makeText(AppealActivity.this, "课程时间是："+CourseTime, Toast.LENGTH_SHORT).show();
+
                 if(CourseNum==null)
                 {
                     mCoursenumView.setError("请填写课程号");
