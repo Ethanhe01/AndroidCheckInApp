@@ -57,7 +57,7 @@ public class SetRatioActivity extends AppCompatActivity {
                 else
                 {
                     Float ratio = Float.parseFloat(Ratio);
-                    if((ratio<0.01)||(ratio>0.50))
+                    if((ratio<Float.parseFloat("0.01"))||(ratio>0.50))
                     {
                         mRatioView.setError("范围错误！");
                         mRatioView.requestFocus();
